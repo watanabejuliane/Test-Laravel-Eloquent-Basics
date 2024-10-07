@@ -33,8 +33,18 @@ class UserController extends Controller
     public function check_create($name, $email)
     {
         // TASK: find a user by $name and $email
+        $user = User::where('name', $name)
+                    ->where('email', $email)
+                    ->first();
+
         //   if not found, create a user with $name, $email and random password
-        $user = NULL;
+        if (!$user) {
+            $user = User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => bcrypt(str_random(10)),
+            ]);
+        }
 
         return view('users.show', compact('user'));
     }
