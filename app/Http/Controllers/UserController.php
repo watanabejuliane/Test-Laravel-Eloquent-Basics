@@ -16,8 +16,8 @@ class UserController extends Controller
         //   limit 3
 
         $users = User::whereNotNull('email_verified_at') // replace this with Eloquent statement
-        ->orderBy('created_at', 'desc')
-        ->take(3)
+        ->orderByDesc('created_at')
+        ->limit(3)
         ->get();
 
         return view('users.index', compact('users'));
@@ -25,7 +25,8 @@ class UserController extends Controller
 
     public function show($userId)
     {
-        $user = NULL; // TASK: find user by $userId or show "404 not found" page
+     // TASK: find user by $userId or show "404 not found" page
+     $user = User::findOrFail($userId);
 
         return view('users.show', compact('user'));
     }
