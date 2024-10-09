@@ -11,12 +11,9 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         // TASK: Currently this statement fails. Fix the underlying issue.
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        Project::create([
-            'name' => $request->name
-        ]);
+        $project = new Project();
+        $project->name = $request->name;
+        $project->save();
 
         return redirect('/')->with('success', 'Project created');
     }
