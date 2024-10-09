@@ -51,9 +51,21 @@ class UserController extends Controller
 
     public function check_update($name, $email)
     {
-        // TASK: find a user by $name and update it with $email
+        // TASK: find a user by $name
+        $user = User::where('name', $name)->first();
         //   if not found, create a user with $name, $email and random password
-        $user = NULL; // updated or created user
+        if(!$user) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt(str_random(10)),
+            ]);
+            //updates email
+        } else {
+            $user->email = $request->email;
+            $user->save();
+        }
+
 
         return view('users.show', compact('user'));
     }
