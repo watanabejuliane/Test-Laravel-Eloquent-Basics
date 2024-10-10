@@ -44,7 +44,7 @@ class UserController extends Controller
             $user = User::create([
                 'name' => $name,
                 'email' => $email,
-                'password' => bcrypt(str_random(10)),
+                'password' => bcrypt(Str::random(10)),
             ]);
         }
 
